@@ -1,11 +1,14 @@
 -- Active: 1747924655126@@127.0.0.1@5432@conservation_db
 
+
+
 -- rangers
 CREATE TABLE rangers (
     ranger_id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     region VARCHAR(100) NOT NULL
 );
+
 -- species
 CREATE TABLE species (
     species_id SERIAL PRIMARY KEY,
@@ -14,6 +17,7 @@ CREATE TABLE species (
     discovery_date DATE NOT NULL,
     conservation_status VARCHAR(50) CHECK (conservation_status IN ('Endangered', 'Vulnerable', 'Historic'))
 );
+
 -- sightings
 CREATE TABLE sightings (
     sighting_id SERIAL PRIMARY KEY,
@@ -23,6 +27,8 @@ CREATE TABLE sightings (
     location VARCHAR(100) NOT NULL,
     notes TEXT DEFAULT NULL
 );
+
+
 -- Problem 0: Insert Sample Data
 INSERT INTO rangers (ranger_id, name, region) VALUES
 (1, 'Alice Green', 'Northern Hills'),
@@ -41,18 +47,12 @@ INSERT INTO sightings (sighting_id, species_id, ranger_id, location, sighting_ti
 (3, 3, 3, 'Bamboo Grove East', '2024-05-15 09:10:00', 'Feeding observed'),
 (4, 1, 2, 'Snowfall Pass', '2024-05-18 18:30:00', NULL);
 
--- SELECT * FROM rangers;
--- SELECT * FROM species;
--- SELECT * FROM sightings;
+
+
+
 -- Problem 1: Register a new ranger named 'Derek Fox'
 INSERT INTO rangers (name, region)
 VALUES ('Derek Fox', 'Coastal Plains');
-
--- SELECT * FROM rangers
--- WHERE name = 'Derek Fox';
-
--- DELETE FROM rangers
--- WHERE ranger_id = 5;
 
 
 
@@ -65,6 +65,7 @@ FROM sightings;
 -- Problem 3: Find all sightings where the location includes "Pass".
 SELECT * FROM sightings
 WHERE location ILIKE '%Pass%';
+
 
 
 -- Problem 4: List each ranger's name and their total number of sightings.
@@ -98,8 +99,6 @@ LIMIT 2;
 UPDATE species
 SET conservation_status = 'Historic'
 WHERE discovery_date < '1800-01-01';
--- SELECT * FROM species WHERE conservation_status = 'Historic';
-
 
 
 -- Problem 8: Label each sighting's time of day as 'Morning', 'Afternoon', or 'Evening'.
@@ -114,10 +113,7 @@ ORDER BY sighting_id;
 
 
 
-
-
 -- Problem 9: Delete rangers who have never sighted any species.
 DELETE FROM rangers
 WHERE ranger_id NOT IN (SELECT DISTINCT ranger_id FROM sightings);
--- SELECT * FROM rangers
--- WHERE ranger_id NOT IN (SELECT DISTINCT ranger_id FROM sightings);
+
